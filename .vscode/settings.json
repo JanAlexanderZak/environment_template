@@ -1,55 +1,65 @@
 {
-    // Python
-    "python.envFile": "${workspaceFolder}/.env",
-    //"python.envFile": "${workspaceFolder}/venv",
-    "python.defaultInterpreterPath": "${workspaceFolder}/venv/Scripts/python.exe",
+    /*
+    Preliminaries:
+        -> needs to re-open
+
+    https://code.visualstudio.com/docs/editor/variables-reference :
+        ${workspaceFolder} - the path of the folder opened in VS Code
+        ${workspaceRoot} - deprecated
+        ${file} - the current opened file
+
+    https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH
+    Augment the default search path for module files
+    Check if it works in powershell: 
+        echo $Env:PYTHONPATH
     
+    */
     "python.terminal.activateEnvironment": true,
     "python.terminal.activateEnvInCurrentTerminal": true,
 
-    // Linting (pylint + mypy)
+    "python.defaultInterpreterPath": "${workspaceFolder}/venv/Scripts/python.exe",
+    
+    
+    "terminal.integrated.env.windows": {
+        "PYTHONPATH": "${workspaceFolder}",
+        // "PATH": "${workspaceFolder}"
+    },
+    
+    "terminal.integrated.cwd": "${workspaceFolder}",
+    "jupyter.notebookFileRoot": "${workspaceFolder}",
+
+    // Linting
     "python.linting.enabled": true,
-    "python.linting.lintOnSave": true,
     "python.linting.ignorePatterns": [
         ".vscode/*.py", 
         "**/site-packages/**/*.py", 
         "venv/*.py", 
         "**/.mypy_cache//**/*.py,",
-        "**/.pytest_cache//**/*.py",
+        "**/.pytest_cache//**/*.py"
     ],
 
     "python.linting.flake8Enabled": false,
     "python.linting.pylintEnabled": true,
     "python.linting.mypyEnabled": true,
 
-    //assert with: where mypy flake8 pylint
     "python.linting.flake8Path": "${workspaceFolder}/venv/Scripts/flake8.exe",
     "python.linting.pylintPath": "${workspaceFolder}/venv/Scripts/pylint.exe",
     "python.linting.mypyPath": "${workspaceFolder}/venv/Scripts/mypy.exe",
+
     "python.linting.pylintArgs": [
-        "--rcfile=${workspaceFolder}/tests/.pylintrc",
+        // "--rcfile=${workspaceFolder}/tests/.pylintrc",
+        "--rcfile=$Env:PYTHONPATH\\tests\\.pylintrc"
     ],
-
     "python.linting.mypyArgs": [
-        "--config-file=${workspaceFolder}/tests/mypy.ini",
+        // "--config-file=${workspaceFolder}/tests/mypy.ini",
+        "--config-file=$Env:PYTHONPATH\\tests\\mypy.ini",
     ],
 
-    // Tests
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
     "python.testing.pytestPath": "${workspaceFolder}/venv/Scripts/pytest.exe",
     "python.testing.pytestArgs": [
-        "tests",
+        "tests"
     ],
     "python.testing.autoTestDiscoverOnSaveEnabled": true,
-
-    // Markdown
-    "[markdown]": {
-        /*
-        "editor.formatOnSave": true,
-        "editor.wordWrap": "on",
-        "editor.renderWhitespace": "all",
-        "editor.acceptSuggestionOnEnter": "off"
-        */
-    },
 }
