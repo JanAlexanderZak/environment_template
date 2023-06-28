@@ -13,5 +13,6 @@
         "yzhang.markdown-all-in-one",
         "almenon.arepl", 
         "ms-azuretools.vscode-docker",
+        "tomoki1207.pdf",
     ],
   }
